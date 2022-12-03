@@ -38,6 +38,13 @@ function findPriorityLetters() {
 }
 
 function setPriority(array) {
+    /*Next time this and the sum can be implemented more quickly
+    if(sharedItem === sharedItem.toUpperCase()) {
+      sum += sharedItem.charCodeAt(0) - 38; // Uppercase values A=27
+    } else { // Lowercase
+      sum += sharedItem.charCodeAt(0) - 96; // Lowercase value a=1
+    }
+    the key point being the charCodeAt, lowercase values a is 97, A is 65.*/
     let chunk = array;
     let priority = [];
     for (item in chunk) {
@@ -134,5 +141,5 @@ function findBadge() {
     }
     return priorityLetter;
 }
-console.log(sumPriority(setPriority(findBadge()))); //first attempt 4034 too high
+console.log('part two is, ', sumPriority(setPriority(findBadge()))); //first attempt 4034 too high
 //correct answer to part to is 2790
