@@ -10,7 +10,6 @@ function readFile(){
 
     return input;
 } 
-//console.log(readFile());
 
 function partOne() {
     let array = readFile();
@@ -26,10 +25,8 @@ function partOne() {
 
     for (item in array) {
         let i = array[item];
-        //console.log(i);
         if (i[2] == 'X') {
             myPoints += 1;
-            //console.log(myPoints);
         }
         else if (i[2] == 'Y') {
             myPoints += 2;

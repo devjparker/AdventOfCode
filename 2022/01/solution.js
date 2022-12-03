@@ -11,7 +11,6 @@ function readFile(){
     return input;
 }    
 
-//console.log(input);
 function makeSumsArray(){
 
     const input = readFile();
@@ -21,15 +20,11 @@ function makeSumsArray(){
 
     for (i in input) {
         let temp = input[i].split('\n');
-        //console.log(temp);
         for (let j = 0; j < temp.length; j++) {
-            //console.log(temp[j]);
             sum += parseInt(temp[j]);
         }
-        //console.log(sum);
         sums.push(sum);
         sum = 0;
-        //console.log(sums);
     }
     return sums;
 }
@@ -37,9 +32,6 @@ function makeSumsArray(){
 function findMax(array) {
     var answer = array[0];
     var answerIndex = 0;
-    //array[112] = 0;
-    //array[123] = 0;
-    //console.log(answer);
     for (let i = 0; i < array.length; i++) {
         if (answer < array[i]) {
             answer = array[i];
