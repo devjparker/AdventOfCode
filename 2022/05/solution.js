@@ -3,7 +3,7 @@ to format the original "stacks". Once we get that,
 moving the items from stack to stack should be
 easier. Goal output is the top item from each "stack".*/
 
-function readFile() {
+function getDirections() {
     const path = require('path');
     const fs = require('fs');
 
@@ -34,25 +34,95 @@ function readFile() {
     return directions;
 } 
 
-//hard-coded stacks as a shortcut
-//TODO make a function that creates the stacks from the input.
-let stackOne = ['D', 'B', 'J', 'V'];
-let stackTwo = ['P', 'V', 'B', 'W', 'R', 'D', 'F'];
-let stackThree = ['R', 'G', 'F', 'L', 'D', 'C', 'W', 'Q'];
-let stackFour = ['W', 'J', 'P', 'M', 'L', 'N', 'D', 'B'];
-let stackFive = ['H', 'N', 'B', 'P', 'C', 'S', 'Q'];
-let stackSix = ['R', 'D', 'B', 'S', 'N', 'G'];
-let stackSeven = ['Z', 'B', 'P', 'M', 'Q', 'F', 'S', 'H'];
-let stackEight = ['W', 'L', 'F'];
-let stackNine = ['S', 'V', 'F', 'M', 'R'];
+function flipArray(array) {
+    let backwardsTempArray = [];
+    let length = array.length - 1;
+    for (length; length >= 0; length--) {
+        backwardsTempArray.push(array[length]);
+    }
+    return backwardsTempArray;
+}
 
-function moveStacks() {
-    let directions = readFile();
+let stackOne = [];
+let stackTwo = [];
+let stackThree = [];
+let stackFour = [];
+let stackFive = [];
+let stackSix = [];
+let stackSeven = [];
+let stackEight = [];
+let stackNine = [];
+
+function getStacks() {
+    const path = require('path');
+    const fs = require('fs');
+
+    const input = fs
+	    .readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
+	    .toString()
+	    .split('\n')
+        .slice(0,8);
+    
+    let temp1 = [];
+    let temp2 = [];
+    let temp3 = [];
+    let temp4 = [];
+    let temp5 = [];
+    let temp6 = [];
+    let temp7 = [];
+    let temp8 = [];
+    let temp9 = [];
+    for (item in input) {
+        let temp = input[item];
+        if (temp[1] != ' ' && temp[1] != '[' && temp[1] != ']') {
+            temp1.push(temp[1]);
+        }
+        if (temp[5] != ' ' && temp[5] != '[' && temp[5] != ']') {
+            temp2.push(temp[5]);
+        }
+        if (temp[9] != ' ' && temp[9] != '[' && temp[9] != ']') {
+            temp3.push(temp[9]);
+        }
+        if (temp[13] != ' ' && temp[13] != '[' && temp[13] != ']') {
+            temp4.push(temp[13]);
+        }
+        if (temp[17] != ' ' && temp[17] != '[' && temp[17] != ']') {
+            temp5.push(temp[17]);
+        }
+        if (temp[21] != ' ' && temp[21] != '[' && temp[21] != ']') {
+            temp6.push(temp[21]);
+        }
+        if (temp[25] != ' ' && temp[25] != '[' && temp[25] != ']') {
+            temp7.push(temp[25]);
+        }
+        if (temp[29] != ' ' && temp[29] != '[' && temp[29] != ']') {
+            temp8.push(temp[29]);
+        }
+        if (temp[33] != ' ' && temp[33] != '[' && temp[33] != ']') {
+            temp9.push(temp[33]);
+        }
+    }
+
+    stackOne = flipArray(temp1);
+    stackTwo = flipArray(temp2);
+    stackThree = flipArray(temp3);
+    stackFour = flipArray(temp4);
+    stackFive = flipArray(temp5);
+    stackSix = flipArray(temp6);
+    stackSeven = flipArray(temp7);
+    stackEight = flipArray(temp8);
+    stackNine = flipArray(temp9);
+}
+
+
+function moveStacks(part) {
+    getStacks();
+    let directions = getDirections();
     let tempArray = [];
 
     for (array in directions) {
         let temp = directions[array];
-        tempArray = sliceArray(temp[0], temp[1]);
+        tempArray = sliceArray(part, temp[0], temp[1]);
         addToArray(tempArray, temp[2]);
         removeFromArray(temp[0], temp[1]);
         
@@ -72,7 +142,7 @@ function moveStacks() {
 
     console.log(one + two + three + four + five + six + seven + eight + nine);
 }
-function sliceArray(numToMove, integer) {
+function sliceArray(part, numToMove, integer) {
     let tempArray = [];
     if (integer == 1) {
         tempArray = stackOne.slice((numToMove)*(-1))
@@ -93,12 +163,8 @@ function sliceArray(numToMove, integer) {
     } else if (integer == 9) {
         tempArray = stackNine.slice((numToMove)*(-1))
     }
-    let backwardsTempArray = [];
-    let length = tempArray.length - 1;
-    for (length; length >= 0; length--) {
-        backwardsTempArray.push(tempArray[length]);
-    }
-    return tempArray;
+    if (part == 1) return flipArray(tempArray);
+    else if(part == 2) return tempArray;
 }
 
 function addToArray(array, stackTo) {
@@ -163,7 +229,8 @@ function removeFromArray(numToMove, arrayNum) {
     }
 }
 
-moveStacks(); //correct answer BSDMQFLSP
+moveStacks(1); //correct answer BSDMQFLSP
+moveStacks(2); //correct answer PGSQBFLDP
 
 /* First attempt was PGSQBFLDP, incorrect.
 I realize now that I kept the substring order, 
